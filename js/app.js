@@ -33,11 +33,26 @@ document.addEventListener("DOMContentLoaded", () => {
   memeListe.addEventListener("click", (e) => {
     const tagName = e.target.tagName;
     if (tagName === "BUTTON") {
-      let memeUrl = e.target.parentNode.parentNode.childNodes[1].childNodes[0].childNodes[0].src;
+      let memeUrl =
+        e.target.parentNode.parentNode.childNodes[1].childNodes[0].childNodes[0].src;
+          
       var remove = removeFromLocalStorage(memeUrl);
       if (remove) {
         e.target.parentNode.parentNode.parentNode.remove();
       }
+    }
+    if (tagName === "IMG") {
+      let id=e.target.parentNode.id;
+      html2canvas(document.getElementById(id),{
+        allowTaint: true,
+        useCORS: true
+      }).then((canvas)=> {
+        var link = document.createElement("a");
+        link.download = `Meme-${id}.jpg`;
+        link.href = canvas.toDataURL();
+        link.target = "_blank";
+        link.click();
+      });
     }
   });
 
@@ -59,6 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const imgcontainer = document.createElement("div");
     imgcontainer.classList.add("imgcontainer");
+    imgcontainer.setAttribute("id",new Date().getTime().toString()+Math.floor(Math.random()*1000));
+
 
     const imageMeme = document.createElement("img");
     imageMeme.style.width = "100%";
@@ -77,18 +94,22 @@ document.addEventListener("DOMContentLoaded", () => {
     deleteButton.innerText = "Delete";
     deleteButton.classList.add("removeButton");
 
+    const downloadMessage = document.createElement("div");
+    downloadMessage.classList.add("message-container");
+    downloadMessage.innerHTML = "Click on the image to download!";
+    downloadMessage.style.textAlign ="center";
+
     imgcontainer.appendChild(imageMeme);
     imgcontainer.appendChild(textTop);
     imgcontainer.appendChild(textBottom);
     cardcontainer2.appendChild(imgcontainer);
     cardcontainer3.appendChild(deleteButton);
+    cardcontainer3.appendChild(downloadMessage);
     card.appendChild(cardcontainer1);
     card.appendChild(cardcontainer2);
     card.appendChild(cardcontainer3);
     column.appendChild(card);
     memeListe.appendChild(column);
-
-
   }
   function loadLocalStorage() {
     for (let meme of dataMemeList) {
@@ -105,9 +126,12 @@ document.addEventListener("DOMContentLoaded", () => {
     return false;
   }
   function saveInLocalStorage(memeSave) {
-    var i = dataMemeList.findIndex((meme) => meme.urlImage === memeSave.urlImage 
-    && meme.textOnTop === memeSave.textOnTop 
-    && meme.textBottom === memeSave.textBottom);
+    var i = dataMemeList.findIndex(
+      (meme) =>
+        meme.urlImage === memeSave.urlImage &&
+        meme.textOnTop === memeSave.textOnTop &&
+        meme.textBottom === memeSave.textBottom
+    );
     if (i === -1) {
       dataMemeList.push(memeSave);
       localStorage.setItem("dataMemeList", JSON.stringify(dataMemeList));
