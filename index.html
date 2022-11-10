@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meme Generator</title>
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <div class="form">
+      <div class="logocontainer">
+        <img src="images/springboard.png" width="300" alt="Avatar" />
+      </div>
+      <div>
+        <form id="from_submit" action="#">
+          <div class="container">
+            <h1>Meme Generator</h1>
+            <a href="https://pixabay.com/images/search/" target="_blank" style="color: green;">Link for free images URL</a>
+            <p><span><b>Instructions :</b>  </span> When you find an image, make a right click on it and copy the image link. You can use it to generate a meme!</p>
+            <p>Please fill in this form to create a meme!</p>
+            <hr />
+            <label for="urlImg"
+              ><b>Image URL <span style="color: red">*</span></b></label
+            >
+            <input
+              type="url"
+              placeholder="Enter Image URL"
+              name="urlImg"
+              id="urlImg"
+              required
+            />
+            <label for="txtOnTop"
+              ><b>Text on Top <span style="color: red">*</span></b></label
+            >
+            <input
+              type="text"
+              placeholder="Enter Text on Top"
+              name="txtOnTop"
+              id="txtOnTop"
+              required
+            />
+
+            <label for="txtOnBottom"
+              ><b>Text on Bottom <span style="color: red">*</span></b></label
+            >
+            <input
+              type="text"
+              placeholder="Enter Text on Bottom"
+              name="txtOnBottom"
+              id="txtOnBottom"
+              required
+            />
+            <hr />
+            <button type="submit" class="generatebtn">Generate</button>
+          </div>
+        </form>
+        <div class="container">
+          <button class="clearStoragesButton" id="BtClear">
+            Clear Local Storage
+          </button>
+          <h2>Meme List</h2>
+          <hr />
+          <div id="iDrowMeme" class="rowMeme">
+
+          </div>
+        </div>
+      </div>
+      <div class="container" style="background-color: #f1f1f1"></div>
+    </div>
+    <script src="js/app.js" defer></script>
+  </body>
+</html>
